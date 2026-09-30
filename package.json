@@ -1,12 +1,11 @@
-{
-  "name": "slot-ortak-havuz",
-  "version": "1.0.0",
-  "description": "Ortak slot havuzu API",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+async function ortakHavuzuGetir() {
+    try {
+        let response = await fetch(SUNUCU_URL + '/havuz-json');
+        let havuz = await response.json();
+        tarananlar = { ...tarananlar, ...havuz };
+        chrome.storage.local.set({ tarananlar: tarananlar });
+        listeyiGuncelleUI();
+    } catch (err) {
+        console.log("Sunucuya bağlanılamadı:", err);
+    }
 }
